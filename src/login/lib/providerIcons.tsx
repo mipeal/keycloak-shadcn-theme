@@ -25,6 +25,7 @@ import oktaSvg from "@/assets/Okta_idmCKbU44P_0.svg?url";
 import salesforceSvg from "@/assets/salesforce-2-logo-svgrepo-com.svg?url";
 import googleColorSvg from "@/assets/google-color-svgrepo-com.svg?url";
 import facebookColorSvg from "@/assets/facebook-network-communication-internet-interaction-svgrepo-com.svg?url";
+import fiedeColorSvg from "@/assets/feide-svgrepo-no.svg?url";
 
 interface IconProps {
   size?: number | string;
@@ -47,6 +48,7 @@ const Okta = createSvgImgComponent(oktaSvg);
 const Salesforce = createSvgImgComponent(salesforceSvg);
 const GoogleColor = createSvgImgComponent(googleColorSvg);
 const FacebookColor = createSvgImgComponent(facebookColorSvg);
+const FeideColor = createSvgImgComponent(fiedeColorSvg);
 
 const providerIconMap: Record<string, ComponentType<IconProps>> = {
   google: GoogleColor,
@@ -71,7 +73,8 @@ const providerIconMap: Record<string, ComponentType<IconProps>> = {
   linkedin: LinkedIn,
   auth0: Auth0,
   okta: Okta,
-  salesforce: Salesforce
+  salesforce: Salesforce,
+  feide: FeideColor
 };
 
 interface ProviderIconProps {

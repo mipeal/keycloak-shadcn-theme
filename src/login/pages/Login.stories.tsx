@@ -188,6 +188,12 @@ export const WithSocialProviders: Story = {
               alias: "openshift",
               providerId: "openshift",
               displayName: "OpenShift"
+            },
+            {
+              loginUrl: "feide",
+              alias: "feide",
+              providerId: "feide",
+              displayName: "Feide"
             }
           ]
         }
