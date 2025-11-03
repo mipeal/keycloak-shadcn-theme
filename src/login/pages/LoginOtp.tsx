@@ -22,13 +22,13 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
             {otpLogin.userOtpCredentials.length > 1 && (
               <div className="space-y-4">
                 <Label className="text-sm font-medium text-foreground">{msg("loginOtpOneTime")}</Label>
-                <RadioGroup defaultValue={otpLogin.selectedCredentialId} name="selectedCredentialId" className="grid gap-4">
+                <RadioGroup defaultValue={otpLogin.selectedCredentialId} name="selectedCredentialId" className="grid gap-3">
                   {otpLogin.userOtpCredentials.map((otpCredential, index) => (
-                    <div key={index} className="flex items-center space-x-2">
-                      <RadioGroupItem value={otpCredential.id} id={`kc-otp-credential-${index}`} />
+                    <div key={index} className="flex items-center space-x-3 rounded-md border border-input bg-background p-3 hover:bg-accent hover:border-accent-foreground/20 transition-colors cursor-pointer">
+                      <RadioGroupItem value={otpCredential.id} id={`kc-otp-credential-${index}`} className="mt-0.5" />
                       <Label
                         htmlFor={`kc-otp-credential-${index}`}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        className="text-sm font-medium leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex-1"
                       >
                         {otpCredential.userLabel}
                       </Label>
