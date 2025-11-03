@@ -15,7 +15,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     keycloakify({
-      accountThemeImplementation: "none",
+      accountThemeImplementation: "Multi-Page",
       keycloakVersionTargets: {
         "all-other-versions": "shadcn-theme.jar",
         "22-to-25": false
