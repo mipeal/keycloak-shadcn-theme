@@ -38,18 +38,24 @@ export default function UpdateEmail(props: UpdateEmailProps) {
 
             <div className="flex items-center space-x-2">
               <Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true} />
-              <Label htmlFor="logout-sessions" className="text-sm font-medium text-white/90">
+              <Label htmlFor="logout-sessions" className="text-sm text-foreground">
                 {msg("logoutOtherSessions")}
               </Label>
             </div>
 
             <div className="flex gap-4">
-              <Button disabled={!isFormSubmittable} type="submit" className={isAppInitiatedAction ? "w-full" : "flex-1"}>
-                {msgStr("doSubmit")}
-              </Button>
-              {isAppInitiatedAction && (
-                <Button variant="outline" className="flex-1" type="submit" name="cancel-aia" value="true">
-                  {msg("doCancel")}
+              {isAppInitiatedAction ? (
+                <>
+                  <Button type="submit" className="flex-1" disabled={!isFormSubmittable}>
+                    {msgStr("doSubmit")}
+                  </Button>
+                  <Button type="submit" name="cancel-aia" value="true" variant="outline" className="flex-1" formNoValidate>
+                    {msg("doCancel")}
+                  </Button>
+                </>
+              ) : (
+                <Button type="submit" className="w-full" disabled={!isFormSubmittable}>
+                  {msgStr("doSubmit")}
                 </Button>
               )}
             </div>
