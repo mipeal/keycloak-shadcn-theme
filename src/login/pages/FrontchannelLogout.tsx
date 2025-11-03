@@ -26,22 +26,31 @@ export default function FrontchannelLogout(props: PageProps<Extract<KcContext, {
       documentTitle={msgStr("frontchannel-logout.title")}
       headerNode={msg("frontchannel-logout.title")}
     >
-      <p>{msg("frontchannel-logout.message")}</p>
-      <ul>
-        {logout.clients.map((client) => (
-          <li key={client.name}>
-            {client.name}
-            <iframe src={client.frontChannelLogoutUrl} className="hidden" />
-          </li>
-        ))}
-      </ul>
-      {logout.logoutRedirectUri && (
-        <Button className="mt-4" asChild>
-          <a id="continue" href={logout.logoutRedirectUri}>
-            {msg("doContinue")}
-          </a>
-        </Button>
-      )}
+      <div className="space-y-4">
+        <p className="text-muted-foreground">{msg("frontchannel-logout.message")}</p>
+        
+        {logout.clients.length > 0 && (
+          <div className="space-y-2">
+            <ul className="space-y-2 list-none">
+              {logout.clients.map((client, index) => (
+                <li key={client.name || index} className="flex items-center gap-2 text-sm">
+                  <span className="h-2 w-2 rounded-full bg-primary" />
+                  <span>{client.name}</span>
+                  <iframe src={client.frontChannelLogoutUrl} className="hidden" title={`Logout ${client.name}`} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {logout.logoutRedirectUri && (
+          <Button className="mt-4" asChild>
+            <a id="continue" href={logout.logoutRedirectUri}>
+              {msg("doContinue")}
+            </a>
+          </Button>
+        )}
+      </div>
     </Template>
   );
 }
