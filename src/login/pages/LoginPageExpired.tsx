@@ -19,20 +19,26 @@ export default function LoginPageExpired(props: PageProps<Extract<KcContext, { p
             <AlertDescription className="space-y-4">
               <p className="flex items-center gap-1 flex-wrap">
                 {msg("pageExpiredMsg1")}{" "}
-                <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                <Button variant="link" className="h-auto p-0 font-semibold text-primary hover:underline" asChild>
                   <a href={url.loginRestartFlowUrl} id="loginRestartLink">{msg("doClickHere")}</a>
                 </Button>
                 .
               </p>
+            </AlertDescription>
+          </Alert>
+          <Alert>
+            <Info className="h-4 w-4" />
+            <AlertDescription className="space-y-4">
               <p className="flex items-center gap-1 flex-wrap">
                 {msg("pageExpiredMsg2")}{" "}
-                <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                <Button variant="link" className="h-auto p-0 font-semibold text-primary hover:underline" asChild>
                   <a href={url.loginAction} id="loginContinueLink">{msg("doClickHere")}</a>
                 </Button>
                 .
               </p>
             </AlertDescription>
           </Alert>
+
         </div>
       </div>
     </Template>
