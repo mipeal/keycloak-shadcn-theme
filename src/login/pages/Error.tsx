@@ -3,6 +3,7 @@ import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { CircleX } from "lucide-react";
 
 export default function Error(props: PageProps<Extract<KcContext, { pageId: "error.ftl" }>, I18n>) {
@@ -24,9 +25,9 @@ export default function Error(props: PageProps<Extract<KcContext, { pageId: "err
           </Alert>
           {!skipLink && client?.baseUrl && (
             <div className="mt-6 text-center">
-              <a id="backToApplication" href={client.baseUrl} className="text-sm font-medium text-primary hover:text-primary/80">
-                {msg("backToApplication")}
-              </a>
+              <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                <a id="backToApplication" href={client.baseUrl}>{msg("backToApplication")}</a>
+              </Button>
             </div>
           )}
         </div>

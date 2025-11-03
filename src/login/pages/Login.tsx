@@ -7,7 +7,6 @@ import type { I18n } from "../i18n";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff, RotateCcw } from "lucide-react";
 import { ProviderIcon } from "../lib/providerIcons";
 
@@ -24,28 +23,35 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
       headerNode={msg("loginAccountTitle")}
       displayInfo={realm.password && realm.registrationAllowed && !registrationDisabled}
       infoNode={
-        <span>
-          {msg("noAccount")}{" "}
-          <a className="text-primary hover:underline" tabIndex={8} href={url.registrationUrl}>
-            {msg("doRegister")}
-          </a>
-        </span>
+        <div className="flex items-center justify-center gap-2 text-white/90">
+          <span>{msg("noAccount")}</span>
+          <Button
+            variant="link"
+            className="h-auto p-0 font-medium text-blue-300 hover:text-blue-200 hover:no-underline"
+            asChild
+          >
+            <a tabIndex={8} href={url.registrationUrl}>
+              {msg("doRegister")}
+            </a>
+          </Button>
+        </div>
       }
       socialProvidersNode={
         <>
           {realm.password && social?.providers !== undefined && social.providers.length !== 0 && (
-            <div id="kc-social-providers" className="mt-2 w-full px-4 sm:px-6">
+            <div id="kc-social-providers" className="mt-6 w-full">
               <div className="relative flex items-center mb-4">
-                <Separator className="flex-1" />
-                <span className="px-4 text-sm text-muted-foreground">{msg("identity-provider-login-label")}</span>
-                <Separator className="flex-1" />
+                <div className="flex-1 border-t border-white/20" />
+                <span className="px-4 text-sm text-white/70">{msg("identity-provider-login-label")}</span>
+                <div className="flex-1 border-t border-white/20" />
               </div>
-              <ul className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">
+              <ul className={`grid ${social.providers.length > 6 ? 'grid-cols-3' : social.providers.length > 3 ? 'grid-cols-2' : 'grid-cols-1'} gap-3`}>
                 {social.providers.map((p) => (
                   <li key={p.alias}>
                     <a
                       id={`social-${p.alias}`}
-                      className="flex items-center justify-center px-4 py-2 border border-border rounded-md shadow-sm text-sm font-medium text-foreground bg-card hover:bg-accent"
+                      className="flex items-center justify-center px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl shadow-sm text-sm font-medium text-white hover:bg-white/10 transition-all duration-200"
+                      style={{ backdropFilter: 'blur(12px)' }}
                       href={p.loginUrl}
                     >
                       <ProviderIcon alias={p.alias} size={20} className="mr-2" />
@@ -59,131 +65,133 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         </>
       }
     >
-      <div className="w-full max-w-md">
-        <div className="py-8 px-4 sm:rounded-lg sm:px-6">
-          {realm.password && (
-            <form
-              onSubmit={() => {
-                setIsLoginButtonDisabled(true);
-                return true;
-              }}
-              action={url.loginAction}
-              method="post"
-              className="space-y-6"
-            >
-              {!usernameHidden && (
-                <div>
-                  <label htmlFor="username" className="block text-sm font-medium text-foreground">
-                    {!realm.loginWithEmailAllowed ? msg("username") : !realm.registrationEmailAsUsername ? msg("usernameOrEmail") : msg("email")}
-                  </label>
-                  <div className="mt-1">
-                    <Input
-                      tabIndex={2}
-                      id="username"
-                      name="username"
-                      defaultValue={login.username ?? ""}
-                      type="text"
-                      autoFocus
-                      autoComplete="username"
-                      aria-invalid={messagesPerField.existsError("username", "password")}
-                      className="h-10"
-                    />
-                  </div>
-                  {messagesPerField.existsError("username", "password") && (
-                    <p className="mt-2 text-sm text-destructive" id="input-error" aria-live="polite">
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: kcSanitize(messagesPerField.getFirstError("username", "password"))
-                        }}
-                      />
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {usernameHidden && auth.showUsername && (
-                <div>
-                  <label htmlFor="username" className="block text-sm font-medium text-foreground">
-                    {!realm.loginWithEmailAllowed ? msg("username") : !realm.registrationEmailAsUsername ? msg("usernameOrEmail") : msg("email")}
-                  </label>
-                  <div className="mt-1 relative">
-                    <Input
-                      tabIndex={2}
-                      id="username"
-                      name="username"
-                      defaultValue={auth.attemptedUsername ?? ""}
-                      type="text"
-                      disabled
-                      className="h-10 bg-muted pr-10"
-                    />
-                    <a
-                      href={url.loginRestartFlowUrl}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                      title={msgStr("restartLoginTooltip")}
-                    >
-                      <RotateCcw size={16} />
-                    </a>
-                  </div>
-                </div>
-              )}
-
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-foreground">
-                  {msg("password")}
-                </label>
-                <PasswordWrapper i18n={i18n} passwordInputId="password">
-                  <Input
-                    tabIndex={3}
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    aria-invalid={messagesPerField.existsError("username", "password")}
-                    className="h-10"
+      {realm.password && (
+        <form
+          onSubmit={() => {
+            setIsLoginButtonDisabled(true);
+            return true;
+          }}
+          action={url.loginAction}
+          method="post"
+          className="space-y-5"
+        >
+          {!usernameHidden && (
+            <div>
+              <label htmlFor="username" className="block text-sm font-medium text-white/90 mb-2">
+                {!realm.loginWithEmailAllowed ? msg("username") : !realm.registrationEmailAsUsername ? msg("usernameOrEmail") : msg("email")}
+              </label>
+              <Input
+                tabIndex={2}
+                id="username"
+                name="username"
+                defaultValue={login.username ?? ""}
+                type="text"
+                autoFocus
+                autoComplete="username"
+                aria-invalid={messagesPerField.existsError("username", "password")}
+                className="h-11 bg-white/5 backdrop-blur-sm border-white/20 text-white placeholder:text-white/50 focus:border-blue-400 focus:ring-blue-500/50"
+                style={{ backdropFilter: 'blur(12px)' }}
+              />
+              {messagesPerField.existsError("username", "password") && (
+                <p className="mt-2 text-sm text-red-300" id="input-error" aria-live="polite">
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: kcSanitize(messagesPerField.getFirstError("username", "password"))
+                    }}
                   />
-                </PasswordWrapper>
-                {usernameHidden && messagesPerField.existsError("username", "password") && (
-                  <p className="mt-2 text-sm text-destructive" id="input-error" aria-live="polite">
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: kcSanitize(messagesPerField.getFirstError("username", "password"))
-                      }}
-                    />
-                  </p>
-                )}
-              </div>
+                </p>
+              )}
+            </div>
+          )}
 
-              <div className="flex items-center justify-between">
-                {realm.rememberMe && !usernameHidden && (
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="rememberMe" name="rememberMe" defaultChecked={!!login.rememberMe} />
-                    <label
-                      htmlFor="rememberMe"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      {msg("rememberMe")}
-                    </label>
-                  </div>
-                )}
-                {realm.resetPasswordAllowed && (
-                  <div className="text-sm">
-                    <a tabIndex={6} href={url.loginResetCredentialsUrl} className="font-medium text-primary hover:text-primary/80">
-                      {msg("doForgotPassword")}
-                    </a>
-                  </div>
-                )}
+          {usernameHidden && auth.showUsername && (
+            <div>
+              <label htmlFor="username" className="block text-sm font-medium text-white/90 mb-2">
+                {!realm.loginWithEmailAllowed ? msg("username") : !realm.registrationEmailAsUsername ? msg("usernameOrEmail") : msg("email")}
+              </label>
+              <div className="relative">
+                <Input
+                  tabIndex={2}
+                  id="username"
+                  name="username"
+                  defaultValue={auth.attemptedUsername ?? ""}
+                  type="text"
+                  disabled
+                  className="h-11 bg-white/5 backdrop-blur-sm border-white/20 text-white/70 pr-10"
+                  style={{ backdropFilter: 'blur(12px)' }}
+                />
+                <a
+                  href={url.loginRestartFlowUrl}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white/90 transition-colors"
+                  title={msgStr("restartLoginTooltip")}
+                >
+                  <RotateCcw size={16} />
+                </a>
               </div>
+            </div>
+          )}
 
-              <div>
-                <input type="hidden" id="id-hidden-input" name="credentialId" value={auth.selectedCredential} />
-                <Button disabled={isLoginButtonDisabled} name="login" type="submit" variant="default" className="w-full">
-                  {msgStr("doLogIn")}
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-white/90 mb-2">
+              {msg("password")}
+            </label>
+            <PasswordWrapper i18n={i18n} passwordInputId="password">
+              <Input
+                tabIndex={3}
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                aria-invalid={messagesPerField.existsError("username", "password")}
+                className="h-11 bg-white/5 backdrop-blur-sm border-white/20 text-white placeholder:text-white/50 focus:border-blue-400 focus:ring-blue-500/50"
+                style={{ backdropFilter: 'blur(12px)' }}
+              />
+            </PasswordWrapper>
+            {usernameHidden && messagesPerField.existsError("username", "password") && (
+              <p className="mt-2 text-sm text-red-300" id="input-error" aria-live="polite">
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: kcSanitize(messagesPerField.getFirstError("username", "password"))
+                  }}
+                />
+              </p>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between">
+            {realm.rememberMe && !usernameHidden && (
+              <div className="flex items-center space-x-2">
+                <Checkbox id="rememberMe" name="rememberMe" defaultChecked={!!login.rememberMe} className="border-white/30 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600" />
+                <label
+                  htmlFor="rememberMe"
+                  className="text-sm font-medium text-white/90 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {msg("rememberMe")}
+                </label>
+              </div>
+            )}
+            {realm.resetPasswordAllowed && (
+              <div className="text-sm">
+                <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                  <a tabIndex={6} href={url.loginResetCredentialsUrl}>{msg("doForgotPassword")}</a>
                 </Button>
               </div>
-            </form>
-          )}
-        </div>
-      </div>
+            )}
+          </div>
+
+          <div>
+            <input type="hidden" id="id-hidden-input" name="credentialId" value={auth.selectedCredential} />
+            <Button 
+              disabled={isLoginButtonDisabled} 
+              name="login" 
+              type="submit" 
+              className="w-full h-11 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium rounded-xl transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {msgStr("doLogIn")}
+            </Button>
+          </div>
+        </form>
+      )}
     </Template>
   );
 }
@@ -200,18 +208,18 @@ function PasswordWrapper(props: { i18n: I18n; passwordInputId: string; children:
   }, [isPasswordRevealed]);
 
   return (
-    <div className="mt-1 relative">
+    <div className="relative">
       {children}
       <Button
         type="button"
         variant="ghost"
         size="icon"
-        className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+        className="absolute right-0 top-0 h-full px-3 hover:bg-white/10 transition-colors duration-200"
         onClick={toggleIsPasswordRevealed}
         aria-label={msgStr(isPasswordRevealed ? "hidePassword" : "showPassword")}
         aria-controls={passwordInputId}
       >
-        {isPasswordRevealed ? <EyeOff className="h-4 w-4 text-muted-foreground" /> : <Eye className="h-4 w-4 text-muted-foreground" />}
+        {isPasswordRevealed ? <EyeOff className="h-4 w-4 text-white/60" /> : <Eye className="h-4 w-4 text-white/60" />}
       </Button>
     </div>
   );

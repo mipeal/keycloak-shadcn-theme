@@ -59,9 +59,9 @@ export default function Register(props: RegisterProps) {
 
             <div className="flex flex-col space-y-4 pt-4">
               <div className="flex justify-between items-center">
-                <a href={url.loginUrl} className="text-sm font-medium text-primary hover:text-primary/80">
-                  {msg("backToLogin")}
-                </a>
+                <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                  <a href={url.loginUrl}>{msg("backToLogin")}</a>
+                </Button>
               </div>
 
               {recaptchaRequired && !recaptchaVisible && recaptchaAction !== undefined ? (

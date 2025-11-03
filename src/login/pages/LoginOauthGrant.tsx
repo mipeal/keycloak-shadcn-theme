@@ -59,19 +59,19 @@ export default function LoginOauthGrant(props: PageProps<Extract<KcContext, { pa
                 </p>
                 <div className="space-y-2 text-sm">
                   {client.attributes.tosUri && (
-                    <div>
+                    <div className="flex items-center gap-1 flex-wrap">
                       {msg("oauthGrantReview")}{" "}
-                      <a href={client.attributes.tosUri} target="_blank" rel="noreferrer" className="text-primary hover:text-primary/80">
-                        {msg("oauthGrantTos")}
-                      </a>
+                      <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                        <a href={client.attributes.tosUri} target="_blank" rel="noreferrer">{msg("oauthGrantTos")}</a>
+                      </Button>
                     </div>
                   )}
                   {client.attributes.policyUri && (
-                    <div>
+                    <div className="flex items-center gap-1 flex-wrap">
                       {msg("oauthGrantReview")}{" "}
-                      <a href={client.attributes.policyUri} target="_blank" rel="noreferrer" className="text-primary hover:text-primary/80">
-                        {msg("oauthGrantPolicy")}
-                      </a>
+                      <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                        <a href={client.attributes.policyUri} target="_blank" rel="noreferrer">{msg("oauthGrantPolicy")}</a>
+                      </Button>
                     </div>
                   )}
                 </div>

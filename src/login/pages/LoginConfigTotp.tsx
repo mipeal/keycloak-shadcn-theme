@@ -37,9 +37,9 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                       <div className="bg-muted p-3 rounded-md">
                         <code className="text-sm font-mono break-all">{totp.totpSecretEncoded}</code>
                       </div>
-                      <a href={totp.qrUrl} className="text-sm font-medium text-primary hover:text-primary/80">
-                        {msg("loginTotpScanBarcode")}
-                      </a>
+                      <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                        <a href={totp.qrUrl}>{msg("loginTotpScanBarcode")}</a>
+                      </Button>
                     </li>
                     <li className="space-y-2">
                       <p className="text-sm font-medium text-foreground">{msg("loginTotpManualStep3")}</p>
@@ -76,9 +76,9 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                         className="max-w-full h-auto"
                       />
                     </div>
-                    <a href={totp.manualUrl} className="text-sm font-medium text-primary hover:text-primary/80">
-                      {msg("loginTotpUnableToScan")}
-                    </a>
+                    <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                      <a href={totp.manualUrl}>{msg("loginTotpUnableToScan")}</a>
+                    </Button>
                   </li>
                 )}
 

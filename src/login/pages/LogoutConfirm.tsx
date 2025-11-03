@@ -30,9 +30,9 @@ export default function LogoutConfirm(props: PageProps<Extract<KcContext, { page
 
                 {!logoutConfirm.skipLink && client.baseUrl && (
                   <div className="text-center">
-                    <a href={client.baseUrl} className="text-sm font-medium text-primary hover:text-primary/80">
-                      {msg("backToApplication")}
-                    </a>
+                    <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                      <a href={client.baseUrl}>{msg("backToApplication")}</a>
+                    </Button>
                   </div>
                 )}
               </div>

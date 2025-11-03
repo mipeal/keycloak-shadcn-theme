@@ -62,9 +62,9 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
             <div className="space-y-4">
               <div className="flex justify-end">
                 {realm.resetPasswordAllowed && (
-                  <a className="text-sm font-medium text-primary hover:text-primary/80" tabIndex={5} href={url.loginResetCredentialsUrl}>
-                    {msg("doForgotPassword")}
-                  </a>
+                  <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                    <a tabIndex={5} href={url.loginResetCredentialsUrl}>{msg("doForgotPassword")}</a>
+                  </Button>
                 )}
               </div>
 

@@ -3,6 +3,7 @@ import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { InfoIcon } from "lucide-react";
 
 export default function Info(props: PageProps<Extract<KcContext, { pageId: "info.ftl" }>, I18n>) {
@@ -47,21 +48,21 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
           </Alert>
 
           {!skipLink && (
-            <div className="mt-6 text-center">
+            <div className="mt-6 flex flex-col gap-3">
               {pageRedirectUri && (
-                <a href={pageRedirectUri} className="text-sm font-medium text-primary hover:text-primary/80">
-                  {msg("backToApplication")}
-                </a>
+                <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                  <a href={pageRedirectUri}>{msg("backToApplication")}</a>
+                </Button>
               )}
               {actionUri && (
-                <a href={actionUri} className="text-sm font-medium text-primary hover:text-primary/80">
-                  {msg("proceedWithAction")}
-                </a>
+                <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                  <a href={actionUri}>{msg("proceedWithAction")}</a>
+                </Button>
               )}
               {client.baseUrl && !pageRedirectUri && !actionUri && (
-                <a href={client.baseUrl} className="text-sm font-medium text-primary hover:text-primary/80">
-                  {msg("backToApplication")}
-                </a>
+                <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+                  <a href={client.baseUrl}>{msg("backToApplication")}</a>
+                </Button>
               )}
             </div>
           )}

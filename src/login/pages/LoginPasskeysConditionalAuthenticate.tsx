@@ -5,6 +5,7 @@ import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import { useScript } from "keycloakify/login/pages/LoginPasskeysConditionalAuthenticate.useScript";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
+import { Button } from "@/components/ui/button";
 
 export default function LoginPasskeysConditionalAuthenticate(
   props: PageProps<Extract<KcContext, { pageId: "login-passkeys-conditional-authenticate.ftl" }>, I18n>
@@ -34,13 +35,13 @@ export default function LoginPasskeysConditionalAuthenticate(
       infoNode={
         realm.registrationAllowed &&
         !registrationDisabled && (
-          <div id="kc-registration">
-            <span>
-              ${msg("noAccount")}{" "}
+          <div id="kc-registration" className="flex items-center justify-center gap-2 text-white/90">
+            <span>{msg("noAccount")}</span>
+            <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
               <a tabIndex={6} href={url.registrationUrl}>
                 {msg("doRegister")}
               </a>
-            </span>
+            </Button>
           </div>
         )
       }
@@ -157,13 +158,14 @@ export default function LoginPasskeysConditionalAuthenticate(
               </form>
             )}
             <div id="kc-form-passkey-button" className={clsx(kcClsx("kcFormButtonsClass"), "hidden")}>
-              <input
+              <Button
                 id={authButtonId}
                 type="button"
                 autoFocus
-                value={msgStr("passkey-doAuthenticate")}
-                className={kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonBlockClass", "kcButtonLargeClass")}
-              />
+                className="w-full"
+              >
+                {msgStr("passkey-doAuthenticate")}
+              </Button>
             </div>
           </div>
         </div>

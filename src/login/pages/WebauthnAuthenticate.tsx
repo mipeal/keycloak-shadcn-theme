@@ -25,12 +25,12 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
       {...props}
       displayInfo={realm.registrationAllowed && !registrationDisabled}
       infoNode={
-        <span>
-          {msg("noAccount")}{" "}
-          <a tabIndex={6} href={url.registrationUrl} className="text-primary hover:underline">
-            {msg("doRegister")}
-          </a>
-        </span>
+        <div className="flex items-center justify-center gap-2 text-white/90">
+          <span>{msg("noAccount")}</span>
+          <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+            <a tabIndex={6} href={url.registrationUrl}>{msg("doRegister")}</a>
+          </Button>
+        </div>
       }
       headerNode={msg("webauthn-login-title")}
     >

@@ -22,12 +22,12 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
       displayMessage={!messagesPerField.existsError("username")}
       displayInfo={realm.password && realm.registrationAllowed && !registrationDisabled}
       infoNode={
-        <span>
-          {msg("noAccount")}{" "}
-          <a className="text-primary hover:underline" tabIndex={6} href={url.registrationUrl}>
-            {msg("doRegister")}
-          </a>
-        </span>
+        <div className="flex items-center justify-center gap-2 text-white/90">
+          <span>{msg("noAccount")}</span>
+          <Button variant="link" className="h-auto p-0 text-blue-300 hover:text-blue-200" asChild>
+            <a tabIndex={6} href={url.registrationUrl}>{msg("doRegister")}</a>
+          </Button>
+        </div>
       }
       headerNode={msg("doLogIn")}
       socialProvidersNode={
