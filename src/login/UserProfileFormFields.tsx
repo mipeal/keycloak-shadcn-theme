@@ -60,14 +60,14 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
             }}
           >
             <div className="space-y-1">
-              <Label htmlFor={attribute.name} className="text-sm font-medium text-foreground">
+              <Label htmlFor={attribute.name} className="text-sm font-medium text-white/90">
                 {advancedMsg(attribute.displayName ?? "")}
-                {attribute.required && <span className="text-destructive ml-1">*</span>}
+                {attribute.required && <span className="text-red-400 ml-1">*</span>}
               </Label>
 
               <div className="space-y-2">
                 {attribute.annotations.inputHelperTextBefore && (
-                  <p className="text-sm text-muted-foreground" id={`form-help-text-before-${attribute.name}`}>
+                  <p className="text-sm text-white/70" id={`form-help-text-before-${attribute.name}`}>
                     {advancedMsg(attribute.annotations.inputHelperTextBefore)}
                   </p>
                 )}
@@ -83,7 +83,7 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
                 <FieldErrors attribute={attribute} displayableErrors={displayableErrors} fieldIndex={undefined} />
 
                 {attribute.annotations.inputHelperTextAfter && (
-                  <p className="text-sm text-muted-foreground" id={`form-help-text-after-${attribute.name}`}>
+                  <p className="text-sm text-white/70" id={`form-help-text-after-${attribute.name}`}>
                     {advancedMsg(attribute.annotations.inputHelperTextAfter)}
                   </p>
                 )}
@@ -128,7 +128,7 @@ function GroupLabel(props: { attribute: Attribute; groupNameRef: { current: stri
 
             return (
               <div className="mb-2">
-                <h2 id={`header-${attribute.group.name}`} className="text-lg font-semibold text-foreground">
+                <h2 id={`header-${attribute.group.name}`} className="text-lg font-semibold text-white">
                   {groupHeaderText}
                 </h2>
               </div>
@@ -141,7 +141,7 @@ function GroupLabel(props: { attribute: Attribute; groupNameRef: { current: stri
               const groupDescriptionText = advancedMsg(groupDisplayDescription);
 
               return (
-                <p id={`description-${attribute.group.name}`} className="text-sm text-muted-foreground">
+                <p id={`description-${attribute.group.name}`} className="text-sm text-white/70">
                   {groupDescriptionText}
                 </p>
               );
@@ -221,12 +221,12 @@ function PasswordWrapper(props: { i18n: I18n; passwordInputId: string; children:
         type="button"
         variant="ghost"
         size="icon"
-        className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+        className="absolute right-0 top-0 h-full px-3 hover:bg-white/10 transition-colors duration-200"
         onClick={toggleIsPasswordRevealed}
         aria-label={msgStr(isPasswordRevealed ? "hidePassword" : "showPassword")}
         aria-controls={passwordInputId}
       >
-        {isPasswordRevealed ? <EyeOff className="h-4 w-4 text-muted-foreground" /> : <Eye className="h-4 w-4 text-muted-foreground" />}
+        {isPasswordRevealed ? <EyeOff className="h-4 w-4 text-white/60" /> : <Eye className="h-4 w-4 text-white/60" />}
       </Button>
     </div>
   );
@@ -256,7 +256,8 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
           assert(typeof valueOrValues === "string");
           return valueOrValues;
         })()}
-        className="h-10"
+        className="h-11 bg-white/5 backdrop-blur-sm border-white/20 text-white placeholder:text-white/50 focus:border-blue-400 focus:ring-blue-500/50"
+        style={{ backdropFilter: 'blur(12px)' }}
         aria-invalid={displayableErrors.find((error) => error.fieldIndex === fieldIndex) !== undefined}
         disabled={attribute.readOnly}
         autoComplete={attribute.autocomplete}
@@ -319,7 +320,8 @@ function TextareaTag(props: InputFieldByTypeProps) {
     <Textarea
       id={attribute.name}
       name={attribute.name}
-      className="min-h-[100px] resize-y"
+      className="min-h-[100px] resize-y bg-white/5 backdrop-blur-sm border-white/20 text-white placeholder:text-white/50 focus:border-blue-400 focus:ring-blue-500/50"
+      style={{ backdropFilter: 'blur(12px)' }}
       aria-invalid={displayableErrors.length !== 0}
       disabled={attribute.readOnly}
       {...(attribute.annotations.inputTypeCols && {
@@ -366,13 +368,13 @@ function SelectTag(props: InputFieldByTypeProps) {
         })
       }
     >
-      <SelectTrigger className="h-10" aria-invalid={displayableErrors.length !== 0}>
+      <SelectTrigger className="h-11 bg-white/5 backdrop-blur-sm border-white/20 text-white focus:border-blue-400 focus:ring-blue-500/50" style={{ backdropFilter: 'blur(12px)' }} aria-invalid={displayableErrors.length !== 0}>
         <SelectValue placeholder=" " />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-gray-800 border-white/20 text-white">
         {!isMultiple && <SelectItem value="__placeholder__">Select...</SelectItem>}
         {options.map((option) => (
-          <SelectItem key={option} value={option}>
+          <SelectItem key={option} value={option} className="focus:bg-white/10 focus:text-white">
             {inputLabel(i18n, attribute, option)}
           </SelectItem>
         ))}
@@ -406,8 +408,8 @@ function InputTagSelects(props: InputFieldByTypeProps) {
       >
         {options.map((option) => (
           <div key={option} className="flex items-center space-x-2">
-            <RadioGroupItem value={option} id={`${attribute.name}-${option}`} />
-            <Label htmlFor={`${attribute.name}-${option}`} className={`text-sm ${attribute.readOnly ? "text-muted-foreground" : "text-foreground"}`}>
+            <RadioGroupItem value={option} id={`${attribute.name}-${option}`} className="border-white/30 text-blue-500" />
+            <Label htmlFor={`${attribute.name}-${option}`} className={`text-sm ${attribute.readOnly ? "text-white/50" : "text-white/90"}`}>
               {inputLabel(i18n, attribute, option)}
             </Label>
           </div>
@@ -428,6 +430,7 @@ function InputTagSelects(props: InputFieldByTypeProps) {
             checked={valueOrValues instanceof Array ? valueOrValues.includes(option) : valueOrValues === option}
             disabled={attribute.readOnly}
             aria-invalid={displayableErrors.length !== 0}
+            className="border-white/30 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
             onCheckedChange={(checked) => {
               dispatchFormAction({
                 action: "update",
@@ -450,7 +453,7 @@ function InputTagSelects(props: InputFieldByTypeProps) {
               })
             }
           />
-          <Label htmlFor={`${attribute.name}-${option}`} className={`text-sm ${attribute.readOnly ? "text-muted-foreground" : "text-foreground"}`}>
+          <Label htmlFor={`${attribute.name}-${option}`} className={`text-sm ${attribute.readOnly ? "text-white/50" : "text-white/90"}`}>
             {inputLabel(i18n, attribute, option)}
           </Label>
         </div>
@@ -468,7 +471,7 @@ function FieldErrors(props: { attribute: Attribute; displayableErrors: FormField
   }
 
   return (
-    <div className="text-xs text-destructive">
+    <div className="text-xs text-red-300">
       <div id={`input-error-${attribute.name}${fieldIndex === undefined ? "" : `-${fieldIndex}`}`} aria-live="polite">
         {displayableErrors.map(({ errorMessage }, i) => (
           <Fragment key={i}>
@@ -505,8 +508,9 @@ function AddRemoveButtonsMultiValuedAttribute(props: {
         <Button
           id={`kc-remove${idPostfix}`}
           type="button"
-          variant="outline"
           size="sm"
+          className="h-9 bg-white/5 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10 transition-all duration-200"
+          style={{ backdropFilter: 'blur(12px)' }}
           onClick={() =>
             dispatchFormAction({
               action: "update",
@@ -522,8 +526,9 @@ function AddRemoveButtonsMultiValuedAttribute(props: {
         <Button
           id={`kc-add${idPostfix}`}
           type="button"
-          variant="outline"
           size="sm"
+          className="h-9 bg-white/5 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10 transition-all duration-200"
+          style={{ backdropFilter: 'blur(12px)' }}
           onClick={() =>
             dispatchFormAction({
               action: "update",

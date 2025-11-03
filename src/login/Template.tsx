@@ -88,11 +88,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
   // ----------------------------------------------------
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900/30 to-cyan-900/20">
+    <div className="min-h-screen relative overflow-y-auto bg-gradient-to-br from-gray-900 via-blue-900/30 to-cyan-900/20">
       
       {/* Background Image */}
       <div 
-        className={`absolute inset-0 transition-opacity duration-1000 ${
+        className={`fixed inset-0 transition-opacity duration-1000 ${
           backgroundImageLoaded ? 'opacity-30' : 'opacity-0'
         }`}
         style={{
@@ -104,7 +104,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
       />
       
       {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-blue-900/60 to-cyan-900/50" />
+      <div className="fixed inset-0 bg-gradient-to-br from-gray-900/80 via-blue-900/60 to-cyan-900/50" />
 
       {/* Norwegian Cyber Range Header */}
       <div className="relative z-10 w-full flex justify-end items-center p-6 max-w-7xl mx-auto">
@@ -142,7 +142,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
       </div>
 
       {/* Main Content Container */}
-      <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-120px)] px-4 py-8">
+      <div className="relative z-10 flex items-start justify-center min-h-[calc(100vh-120px)] px-4 py-8">
         <div className="w-full max-w-md">          
           {/* Main Logo and Branding */}
           <div className="text-center mb-8">
