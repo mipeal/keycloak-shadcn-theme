@@ -50,6 +50,12 @@ This is a Keycloakify v11 project that creates custom Keycloak login themes usin
 
 ### Project Structure
 
+- `src/account/` - All Keycloak account related code
+  - `src/account/pages/` - Individual page implementations (each has .tsx and .stories.tsx)
+  - `src/account/KcPage.tsx` - Router mapping page IDs to components
+  - `src/logaccountin/Template.tsx` - Shared layout wrapper
+  - `src/account/i18n.ts` - Internationalization setup using Keycloakify's i18n builder
+  - `src/account/assets/` - Fonts and images for the theme
 - `src/login/` - All Keycloak theme-related code
   - `src/login/pages/` - Individual page implementations (each has .tsx and .stories.tsx)
   - `src/login/KcPage.tsx` - Router mapping page IDs to components
